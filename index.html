@@ -2,97 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#FADED2">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="0; url=website%20file.html">
 <title>Happy Birthday, Bhavanika</title>
-<style>
-html,body{margin:0;padding:0;width:100%;min-height:100%;background:#FADED2;overflow-x:hidden}
-body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-#birthday{display:block;width:100%;height:100vh;min-height:100vh;border:0;margin:0;padding:0;background:#FADED2;overflow:hidden}
-</style>
 </head>
 <body>
-<iframe id="birthday" title="Happy Birthday, Bhavanika" src="website%20file.html" scrolling="no"></iframe>
-<script>
-(function(){
-  'use strict';
-  var frame=document.getElementById('birthday');
-  function enhance(){
-    var doc=frame.contentDocument;
-    if(!doc)return;
-    var style=doc.createElement('style');
-    style.id='clean-performance-enhancements';
-    style.textContent=`
-      html,body{overflow-x:hidden;-webkit-overflow-scrolling:touch}
-      #world{will-change:auto!important}
-      #cat,#yesCard,.btn,.gateway-inner,.art-card{backface-visibility:hidden;-webkit-backface-visibility:hidden}
-      .rv{filter:none!important;transition-duration:.78s!important;transition-timing-function:cubic-bezier(.22,.72,.24,1)!important}
-      .d1{transition-delay:.04s!important}.d2{transition-delay:.08s!important}.d3{transition-delay:.12s!important}
-      .d4{transition-delay:.16s!important}.d5{transition-delay:.20s!important}.d6{transition-delay:.24s!important}
-      .d7{transition-delay:.28s!important}.d8{transition-delay:.32s!important}.d9{transition-delay:.36s!important}.d10{transition-delay:.40s!important}
-      #yesCard.yes-beat{display:block!important;opacity:1!important;transform:translate3d(-50%,-50%,0) scale(1)!important;transition:opacity .32s ease,transform .42s cubic-bezier(.2,.85,.2,1)!important}
-      #yesCard.yes-beat .script{animation:yesTitle .72s cubic-bezier(.2,.9,.2,1) both}
-      @keyframes yesTitle{0%{opacity:0;transform:translate3d(0,12px,0) scale(.96)}100%{opacity:1;transform:none}}
-      #cat.yes-beat{opacity:1!important}
-      @media(max-width:720px){
-        #grain{opacity:.08!important}
-        #cat{width:118px!important}
-        #yesCard{width:min(90vw,520px)!important;padding:24px 18px 28px!important;border-radius:22px!important}
-        #yesCard .script{font-size:clamp(40px,13vw,72px)!important}
-        #yesCard p{font-size:14px!important;line-height:1.55!important}
-      }
-      @media(prefers-reduced-motion:reduce){.rv{transition:none!important}.btn,.gateway-inner,.art-card{transition:none!important}}
-    `;
-    doc.head.appendChild(style);
-
-    var yes=doc.getElementById('btnYes');
-    var root=doc.documentElement;
-    var card=doc.getElementById('yesCard');
-    var cat=doc.getElementById('cat');
-    var yesLocked=false;
-    if(yes && !yes.dataset.cleanEnhancement){
-      yes.dataset.cleanEnhancement='1';
-      yes.addEventListener('click',function(e){
-        if(yesLocked)return;
-        yesLocked=true;
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        yes.disabled=true;
-        root.classList.add('yes-beat');
-        if(card)card.classList.add('yes-beat');
-        if(cat)cat.classList.add('yes-beat');
-        try{
-          var r=yes.getBoundingClientRect();
-          if(window.Confetti && typeof window.Confetti.burst==='function'){
-            var mobile=window.innerWidth<720;
-            window.Confetti.burst({x:r.left+r.width/2,y:r.top+r.height/2,count:mobile?55:95,spread:130,startVelocity:17,ticks:180,shapes:['rect','circle','heart'],scalar:1.04});
-          }
-          if(typeof window.floatHearts==='function')window.floatHearts(window.innerWidth<720?12:22,{spreadDelay:.12});
-          if(typeof window.flashGlow==='function')window.flashGlow(.72,180,260,520);
-          if(window.Cat && typeof window.Cat.centerThanks==='function')window.Cat.centerThanks({fast:true});
-        }catch(err){console.warn('Birthday enhancement fallback:',err)}
-        window.setTimeout(function(){
-          if(card)card.classList.remove('yes-beat');
-          if(cat)cat.classList.remove('yes-beat');
-          root.classList.remove('yes-beat');
-        },2700);
-      },true);
-    }
-    var sync=function(){
-      var h=Math.max(doc.documentElement.scrollHeight,doc.body.scrollHeight,window.innerHeight);
-      frame.style.height=h+'px';
-      frame.style.minHeight=h+'px';
-    };
-    sync();
-    if(window.ResizeObserver){
-      new ResizeObserver(sync).observe(doc.documentElement);
-      new ResizeObserver(sync).observe(doc.body);
-    }else{window.setInterval(sync,500)}
-    window.addEventListener('resize',sync,{passive:true});
-  }
-  frame.addEventListener('load',enhance,{once:true});
-  if(frame.contentDocument && frame.contentDocument.readyState==='complete')enhance();
-})();
-</script>
+<script>location.replace('website%20file.html');</script>
+<p>Opening your birthday surprise…</p>
 </body>
 </html>
