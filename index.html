@@ -12,24 +12,20 @@
 <style>
 :root{--pink:#DC97A5;--pink2:#E8AAB5;--wine:#4A2732;--cream:#FFF9F6;--gold:#E8C66A;--bg:#FADED2}
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;overflow:hidden}
+html,body{margin:0;min-height:100%;overflow-x:hidden;overflow-y:auto}
 body{font-family:Inter,system-ui,sans-serif;color:var(--wine);background:var(--bg);-webkit-font-smoothing:antialiased}
-.page{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden;background:
- radial-gradient(80% 55% at 50% 18%,rgba(255,249,246,.9),transparent 68%),
- radial-gradient(65% 50% at 10% 82%,rgba(220,151,165,.18),transparent 70%),
- radial-gradient(70% 55% at 94% 72%,rgba(232,198,106,.12),transparent 72%),
- linear-gradient(145deg,#FCE7DC 0%,#FADED2 45%,#F8D8CC 100%)}
+.page{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden;background:radial-gradient(80% 55% at 50% 18%,rgba(255,249,246,.9),transparent 68%),radial-gradient(65% 50% at 10% 82%,rgba(220,151,165,.18),transparent 70%),radial-gradient(70% 55% at 94% 72%,rgba(232,198,106,.12),transparent 72%),linear-gradient(145deg,#FCE7DC 0%,#FADED2 45%,#F8D8CC 100%)}
 .page:before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 50% 48%,rgba(255,249,246,.42),transparent 38%);animation:breath 5s ease-in-out infinite;pointer-events:none}
-.content{position:relative;z-index:2;width:min(92vw,760px);padding:34px 20px 44px;text-align:center}
-.eyebrow{font-size:clamp(10px,1.7vw,12px);font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:#96505F;margin:0 0 clamp(18px,3vw,28px)}
-.title{font-family:"Playfair Display",Georgia,serif;font-size:clamp(42px,9.5vw,92px);font-weight:400;line-height:.98;letter-spacing:.01em;text-transform:uppercase;margin:0}
-.name{font-family:"Great Vibes",cursive;font-size:clamp(66px,15vw,150px);line-height:.9;margin:10px 0 28px;background:linear-gradient(174deg,#E8AAB5,#DC97A5 35%,#BE7C8D 72%,#96505F);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.badge{width:clamp(58px,8vw,78px);height:clamp(58px,8vw,78px);margin:0 auto 30px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 32% 24%,#F0BFC6,#DC97A5 58%,#C98695);box-shadow:0 22px 42px -20px rgba(74,39,50,.45),inset 0 2px 7px rgba(255,255,255,.45);animation:float 3s ease-in-out infinite}
+.content{position:relative;z-index:2;width:min(92vw,760px);padding:28px 20px 34px;text-align:center}
+.eyebrow{font-size:clamp(10px,1.7vw,12px);font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:#96505F;margin:0 0 clamp(14px,2vw,24px)}
+.title{font-family:"Playfair Display",Georgia,serif;font-size:clamp(40px,8.2vw,78px);font-weight:400;line-height:.98;letter-spacing:.01em;text-transform:uppercase;margin:0}
+.name{font-family:"Great Vibes",cursive;font-size:clamp(62px,12.5vw,128px);line-height:.9;margin:7px 0 20px;background:linear-gradient(174deg,#E8AAB5,#DC97A5 35%,#BE7C8D 72%,#96505F);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.badge{width:clamp(54px,6vw,68px);height:clamp(54px,6vw,68px);margin:0 auto 20px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 32% 24%,#F0BFC6,#DC97A5 58%,#C98695);box-shadow:0 22px 42px -20px rgba(74,39,50,.45),inset 0 2px 7px rgba(255,255,255,.45);animation:float 3s ease-in-out infinite}
 .badge svg{width:43%;fill:var(--cream)}
-.message{font-size:clamp(15px,2.1vw,19px);line-height:1.8;max-width:48ch;margin:0 auto;color:rgba(74,39,50,.9)}
-.signature{font-size:clamp(10px,1.5vw,12px);letter-spacing:.3em;text-transform:uppercase;color:#96505F;margin:26px 0 34px}
-.divider{height:1px;width:70px;margin:0 auto 28px;background:linear-gradient(90deg,transparent,var(--pink),var(--gold),transparent)}
-.enter{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:58px;padding:18px 38px;border:0;border-radius:999px;cursor:pointer;text-decoration:none;color:var(--cream);font-size:11px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;background:linear-gradient(140deg,#E7A9B4,#DC97A5 48%,#CE8A99);box-shadow:0 18px 38px -16px rgba(220,151,165,.9);animation:beckon 1.8s ease-in-out infinite;transition:transform .35s ease,box-shadow .35s ease}
+.message{font-size:clamp(14px,1.55vw,17px);line-height:1.65;max-width:48ch;margin:0 auto;color:rgba(74,39,50,.9)}
+.signature{font-size:clamp(9px,1.2vw,11px);letter-spacing:.3em;text-transform:uppercase;color:#96505F;margin:18px 0 22px}
+.divider{height:1px;width:70px;margin:0 auto 20px;background:linear-gradient(90deg,transparent,var(--pink),var(--gold),transparent)}
+.enter{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:54px;padding:16px 36px;border:0;border-radius:999px;cursor:pointer;text-decoration:none;color:var(--cream);font-size:11px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;background:linear-gradient(140deg,#E7A9B4,#DC97A5 48%,#CE8A99);box-shadow:0 18px 38px -16px rgba(220,151,165,.9);animation:beckon 1.8s ease-in-out infinite;transition:transform .35s ease,box-shadow .35s ease}
 .enter:hover{transform:translateY(-3px) scale(1.035);box-shadow:0 25px 48px -14px rgba(220,151,165,1)}
 .enter:active{transform:scale(.97)}
 .enter:focus-visible{outline:2px solid var(--wine);outline-offset:5px}
@@ -42,7 +38,8 @@ body{font-family:Inter,system-ui,sans-serif;color:var(--wine);background:var(--b
 @keyframes beckon{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.045);box-shadow:0 22px 46px -14px rgba(220,151,165,1),0 0 0 10px rgba(220,151,165,.11)}}
 @keyframes breath{0%,100%{transform:scale(1);opacity:.65}50%{transform:scale(1.06);opacity:1}}
 @keyframes twinkle{0%,100%{transform:scale(.6);opacity:.2}50%{transform:scale(1.35);opacity:.75}}
-@media(max-width:520px){.content{padding:28px 18px 38px}.name{margin-top:6px;margin-bottom:24px}.message{max-width:34ch}.signature{margin-bottom:28px}.enter{min-height:56px;padding:17px 30px;letter-spacing:.22em}}
+@media(max-width:520px){.content{padding:24px 18px 30px}.name{margin-top:5px;margin-bottom:20px}.message{max-width:34ch}.signature{margin:17px 0 21px}.enter{min-height:56px;padding:17px 30px;letter-spacing:.22em}}
+@media(max-height:760px) and (min-width:521px){.content{padding-block:18px}.eyebrow{margin-bottom:12px}.name{margin-bottom:14px}.badge{margin-bottom:14px}.message{line-height:1.5}.signature{margin:12px 0 16px}.divider{margin-bottom:15px}.enter{min-height:50px;padding:14px 32px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 </style>
 </head>
