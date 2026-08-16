@@ -15,16 +15,33 @@
     let h=await r.text();
     const patch=`
 <style id="photo-layout-patch">
-.view#viewStory>main#world>section.sec:nth-of-type(2) .art-frame{overflow:hidden}
-.view#viewStory>main#world>section.sec:nth-of-type(2) .story-photo{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center center!important}
-#giftSection{min-height:100svh;display:flex;align-items:center;padding:clamp(16px,3svh,32px) 0}
-#giftSection .memory-wrap{width:min(48svh,390px);margin:clamp(8px,1.5svh,18px) auto 0}
+/* Keep the birthday greeting only at the very beginning. */
+#final{display:none!important}
+#hero .scroll-cue,#hero .hero-divider{display:none!important}
+
+/* Memory card: larger, square, and NEVER crop the supplied portrait. */
+#giftSection{min-height:100svh;display:flex;align-items:center;padding:clamp(18px,3svh,34px) 0}
+#giftSection .memory-wrap{width:min(76vw,430px);margin:0 auto}
 #giftSection .memory-card{width:100%}
-#giftSection .memory-frame{width:100%!important;aspect-ratio:1/1!important;height:auto!important;overflow:hidden!important;display:block!important}
-#giftSection .memory-frame>img{display:block!important;width:100%!important;height:100%!important;aspect-ratio:1/1!important;object-fit:cover!important;object-position:center center!important}
-#giftSection .memory-card .art-cap{padding:10px 8px 2px;font-size:clamp(19px,2vw,28px)}
-@media(max-width:719px){#giftSection .memory-wrap{width:min(84vw,350px)}}
-@media(min-width:900px) and (max-height:760px){#giftSection .memory-wrap{width:min(44svh,330px)}}
+#giftSection .memory-frame{
+  position:relative;width:100%!important;aspect-ratio:1/1!important;height:auto!important;
+  overflow:hidden!important;display:grid!important;place-items:center!important;
+  background:#f5e4dc!important;border-radius:10px!important;
+}
+#giftSection .memory-frame::before{
+  content:"";position:absolute;inset:-8%;
+  background-image:url('assets/bhavanika.jpg');background-size:cover;background-position:center;
+  filter:blur(18px);transform:scale(1.08);opacity:.32;
+}
+#giftSection .memory-frame>img{
+  position:relative;z-index:1;display:block!important;
+  width:100%!important;height:100%!important;
+  aspect-ratio:auto!important;object-fit:contain!important;object-position:center!important;
+  background:rgba(255,249,246,.18)!important;
+}
+#giftSection .memory-card .art-cap{padding:10px 8px 4px;font-size:clamp(18px,2vw,28px)}
+@media(max-width:719px){#giftSection .memory-wrap{width:min(88vw,390px)}}
+@media(min-width:900px) and (max-height:760px){#giftSection .memory-wrap{width:min(60svh,390px)}}
 </style>
 <script>
 (function(){
@@ -54,11 +71,15 @@
     img.loading='eager';
     return true;
   }
-  function apply(){return setMemoryImage()&&setStoryImage()}
+  function apply(){
+    const memory=setMemoryImage();
+    const story=setStoryImage();
+    return memory||story;
+  }
   if(!apply()){
     const observer=new MutationObserver(()=>{if(apply())observer.disconnect()});
     observer.observe(document.documentElement,{childList:true,subtree:true});
-    setTimeout(()=>observer.disconnect(),8000);
+    setTimeout(()=>observer.disconnect(),10000);
   }
 })();
 <\/script>`;
