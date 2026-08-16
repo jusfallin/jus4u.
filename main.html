@@ -15,43 +15,16 @@
     let h=await r.text();
     const patch=`
 <style id="photo-layout-patch">
-/* Opening/story photo: use the uploaded photo without stretching it. */
 .view#viewStory>main#world>section.sec:nth-of-type(2) .art-frame{overflow:hidden}
-.view#viewStory>main#world>section.sec:nth-of-type(2) .story-photo{
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  object-fit:cover!important;
-  object-position:center center!important;
-}
-
-/* Gift-box memory photo: true 1:1 square frame, larger and crisp. */
+.view#viewStory>main#world>section.sec:nth-of-type(2) .story-photo{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center center!important}
 #giftSection{min-height:100svh;display:flex;align-items:center;padding:clamp(16px,3svh,32px) 0}
 #giftSection .memory-wrap{width:min(48svh,390px);margin:clamp(8px,1.5svh,18px) auto 0}
 #giftSection .memory-card{width:100%}
-#giftSection .memory-frame{
-  width:100%!important;
-  aspect-ratio:1/1!important;
-  height:auto!important;
-  overflow:hidden!important;
-  display:block!important;
-}
-#giftSection .memory-frame>img{
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  aspect-ratio:1/1!important;
-  object-fit:cover!important;
-  object-position:center center!important;
-}
+#giftSection .memory-frame{width:100%!important;aspect-ratio:1/1!important;height:auto!important;overflow:hidden!important;display:block!important}
+#giftSection .memory-frame>img{display:block!important;width:100%!important;height:100%!important;aspect-ratio:1/1!important;object-fit:cover!important;object-position:center center!important}
 #giftSection .memory-card .art-cap{padding:10px 8px 2px;font-size:clamp(19px,2vw,28px)}
-
-@media(max-width:719px){
-  #giftSection .memory-wrap{width:min(84vw,350px)}
-}
-@media(min-width:900px) and (max-height:760px){
-  #giftSection .memory-wrap{width:min(44svh,330px)}
-}
+@media(max-width:719px){#giftSection .memory-wrap{width:min(84vw,350px)}}
+@media(min-width:900px) and (max-height:760px){#giftSection .memory-wrap{width:min(44svh,330px)}}
 </style>
 <script>
 (function(){
