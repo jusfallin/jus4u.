@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Birthday Celebration 💗</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#FADED2}
+iframe{display:block;width:100%;height:100%;border:0}
+</style>
+</head>
+<body>
+<iframe id="birthday" src="website%20file.html" title="Birthday celebration"></iframe>
+<script>
+const frame=document.getElementById('birthday');
+frame.addEventListener('load',()=>{
+  try{
+    const doc=frame.contentDocument;
+    const hero=doc.getElementById('hero');
+    if(hero) hero.style.display='none';
+    const world=doc.getElementById('world');
+    if(world) world.style.minHeight='100vh';
+    window.requestAnimationFrame(()=>frame.contentWindow.scrollTo(0,0));
+  }catch(e){console.error('Could not remove duplicate opening hero:',e)}
+});
+</script>
+</body>
+</html>
