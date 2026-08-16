@@ -15,35 +15,20 @@
     let html=await response.text();
     const smoothPatch=`
 <style id="smoothness-patch">
-/* Clean, low-latency motion layer */
 #hero{display:none!important}
 .scroll-cue{display:none!important}
 #world{min-height:100vh!important}
-.rv{
-  filter:none!important;
-  transition:opacity .56s cubic-bezier(.22,.72,.24,1),transform .66s cubic-bezier(.19,.78,.22,1)!important;
-  will-change:opacity,transform!important;
-}
+.rv{filter:none!important;transition:opacity .56s cubic-bezier(.22,.72,.24,1),transform .66s cubic-bezier(.19,.78,.22,1)!important;will-change:opacity,transform!important}
 .rv-l,.rv-r{transform:translate3d(0,18px,0)!important}
 .rv-s{transform:translate3d(0,14px,0) scale(.975)!important}
-.d1{transition-delay:.03s!important}.d2{transition-delay:.06s!important}.d3{transition-delay:.09s!important}
-.d4{transition-delay:.12s!important}.d5{transition-delay:.15s!important}.d6{transition-delay:.18s!important}
-.d7{transition-delay:.21s!important}.d8{transition-delay:.24s!important}.d9{transition-delay:.27s!important}.d10{transition-delay:.30s!important}
+.d1{transition-delay:.03s!important}.d2{transition-delay:.06s!important}.d3{transition-delay:.09s!important}.d4{transition-delay:.12s!important}.d5{transition-delay:.15s!important}.d6{transition-delay:.18s!important}.d7{transition-delay:.21s!important}.d8{transition-delay:.24s!important}.d9{transition-delay:.27s!important}.d10{transition-delay:.30s!important}
 #giftBlock,#memory,#proposal{filter:none!important}
 #yesCard{filter:none!important;transition:none!important}
-@media(max-width:719px){
-  .rv{transition-duration:.48s!important}
-  .d1{transition-delay:.02s!important}.d2{transition-delay:.04s!important}.d3{transition-delay:.06s!important}
-  .d4{transition-delay:.08s!important}.d5{transition-delay:.10s!important}.d6{transition-delay:.12s!important}
-  .d7{transition-delay:.14s!important}.d8{transition-delay:.16s!important}
-}
+@media(max-width:719px){.rv{transition-duration:.48s!important}.d1{transition-delay:.02s!important}.d2{transition-delay:.04s!important}.d3{transition-delay:.06s!important}.d4{transition-delay:.08s!important}.d5{transition-delay:.10s!important}.d6{transition-delay:.12s!important}.d7{transition-delay:.14s!important}.d8{transition-delay:.16s!important}}
 </style>
 <script>
 (function(){
   'use strict';
-  /* The original page already contains its full animation engine.
-     This layer only replaces the YES reaction so related elements begin
-     on the same frame and finish on the same beat. */
   function smoothYes(e){
     var btn=e.target.closest&&e.target.closest('#btnYes');
     if(!btn||window.__smoothYesFired)return;
@@ -52,7 +37,6 @@
     window.__smoothYesFired=true;
     btn.classList.remove('beckon');
     btn.disabled=true;
-
     var card=document.getElementById('yesCard');
     var cat=window.Cat;
     var conf=window.Confetti;
@@ -61,7 +45,6 @@
     var tw=window.tween;
     var ease=window.Ease;
     if(!card||!cat||!tw||!ease)return;
-
     var r=btn.getBoundingClientRect();
     if(conf){
       conf.burst({x:r.left+r.width/2,y:r.top+r.height/2,count:125,spread:130,startVelocity:17,ticks:190,shapes:['rect','circle','heart'],scalar:1.02});
@@ -69,26 +52,17 @@
     }
     if(hearts)hearts(24,{spreadDelay:1.4,goldChance:.24});
     if(glow)glow(.62,520,620,900);
-
-    /* Card and cat start together. The card duration mirrors the cat's
-       entrance so neither one feels like it is waiting for the other. */
     card.style.display='block';
     card.style.opacity='0';
     card.style.transform='translate3d(-50%,-50%,0) scale(.90)';
-
     var catPromise=Promise.resolve();
     if(cat&&cat.appearCenter){
-      catPromise=cat.appearCenter().then(function(){
-        cat.setMood('happy');
-        cat.stopTalking();
-      });
+      catPromise=cat.appearCenter().then(function(){cat.setMood('happy');cat.stopTalking();});
     }
-
     var cardPromise=tw({duration:1160,ease:ease.outCubic,onUpdate:function(v,p){
       card.style.opacity=String(Math.min(1,p*1.12));
       card.style.transform='translate3d(-50%,-50%,0) scale('+(.90+.10*p).toFixed(4)+')';
     }});
-
     Promise.all([catPromise,cardPromise]).then(function(){
       if(cat&&cat.setMood)cat.setMood('happy');
       return new Promise(function(resolve){setTimeout(resolve,3300)});
@@ -103,11 +77,9 @@
       window.__smoothYesFired=false;
     });
   }
-  /* Capture phase runs before the old click handler, preventing the old
-     long queued reaction from running at all. */
   document.addEventListener('click',smoothYes,true);
 })();
-</script>`;
+<\/script>`;
     html=html.replace(/<\/body>/i,smoothPatch+'</body>');
     document.open();
     document.write(html);
