@@ -19,26 +19,27 @@
    main.html starts with the story so the greeting is not repeated. */
 #hero{display:none!important}
 
-/* Memory card: show the ENTIRE supplied portrait without cropping. */
+/* Memory card: show the ENTIRE supplied portrait, using the original-resolution PNG. */
 #giftSection{min-height:100svh;display:flex;align-items:center;padding:clamp(18px,3svh,34px) 0}
 #giftSection .memory-wrap{width:min(76vw,430px);margin:0 auto}
 #giftSection .memory-card{width:100%}
 #giftSection .memory-frame{
   position:relative;width:100%!important;height:auto!important;
-  aspect-ratio:180/306!important;
+  aspect-ratio:606/1024!important;
   overflow:hidden!important;display:block!important;
   background:#f5e4dc!important;border-radius:10px!important;
 }
 #giftSection .memory-frame::before{
   content:"";position:absolute;inset:-8%;
-  background-image:url('assets/bhavanika.jpg');background-size:cover;background-position:center;
+  background-image:url('assets/file_000000004ab482088a7d776c072c4951.png?v=2');background-size:cover;background-position:center;
   filter:blur(18px);transform:scale(1.08);opacity:.26;
 }
 #giftSection .memory-frame>img{
   position:relative;z-index:1;display:block!important;
   width:100%!important;height:100%!important;max-width:none!important;
-  aspect-ratio:180/306!important;
+  aspect-ratio:606/1024!important;
   object-fit:contain!important;object-position:center!important;
+  image-rendering:auto!important;
   background:rgba(255,249,246,.08)!important;
 }
 #giftSection .memory-card .art-cap{padding:10px 8px 4px;font-size:clamp(18px,2vw,28px)}
@@ -54,7 +55,7 @@
     if(oldSvg)oldSvg.remove();
     let img=frame.querySelector('img');
     if(!img){img=document.createElement('img');frame.appendChild(img)}
-    img.src='assets/bhavanika.jpg';
+    img.src='assets/file_000000004ab482088a7d776c072c4951.png?v=2';
     img.alt='A cherished selfie of us together';
     img.decoding='async';
     img.loading='eager';
