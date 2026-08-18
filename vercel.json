@@ -2,6 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
+      "source": "/assets/bhavanika.jpg",
+      "destination": "/assets/IMG_20260818_203948.jpg"
+    },
+    {
       "source": "/",
       "destination": "/loading.html"
     }
