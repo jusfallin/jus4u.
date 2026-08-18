@@ -17,60 +17,84 @@
 <style id="photo-layout-patch">
 #hero{display:none!important}
 
-/* Replace the flower illustration with the uploaded portrait. */
+/* FAVORITE MEMORY / GIFTBOX — keep the couple photo here. */
 #giftSection{min-height:100svh;display:flex;align-items:center;padding:clamp(18px,3svh,34px) 0}
-#giftSection .memory-wrap{width:min(76vw,500px);margin:0 auto}
+#giftSection .memory-wrap{width:min(76vw,430px);margin:0 auto}
 #giftSection .memory-card{width:100%;transform:rotate(0deg)!important}
 #giftSection .memory-frame{
   position:relative;width:100%!important;height:auto!important;
-  aspect-ratio:1667/944!important;overflow:hidden!important;display:block!important;
-  background:#f8e8e1!important;border-radius:10px!important;
-  box-shadow:0 24px 50px rgba(96,55,67,.16),0 4px 14px rgba(96,55,67,.08)!important;
+  aspect-ratio:606/1024!important;overflow:hidden!important;display:block!important;
+  background:#f5e4dc!important;border-radius:10px!important;
 }
 #giftSection .memory-frame::before{
-  content:"";position:absolute;inset:-10%;
-  background-image:url('assets/her%20image.png?v=3');background-size:cover;background-position:center;
-  filter:blur(24px);transform:scale(1.12);opacity:.28;
+  content:"";position:absolute;inset:-8%;
+  background-image:url('assets/file_000000004ab482088a7d776c072c4951.png?v=4');
+  background-size:cover;background-position:center;
+  filter:blur(18px);transform:scale(1.08);opacity:.26;
 }
 #giftSection .memory-frame>img{
   position:relative;z-index:1;display:block!important;
   width:100%!important;height:100%!important;max-width:none!important;
   object-fit:contain!important;object-position:center!important;
-  image-rendering:auto!important;background:rgba(255,249,246,.16)!important;
+  image-rendering:auto!important;background:rgba(255,249,246,.08)!important;
 }
 #giftSection .memory-card .art-cap{padding:10px 8px 4px;font-size:clamp(18px,2vw,28px)}
-@media(max-width:719px){#giftSection .memory-wrap{width:min(92vw,430px)}}
-@media(min-width:900px) and (max-height:760px){#giftSection .memory-wrap{width:min(62svh,500px)}}
+@media(max-width:719px){#giftSection .memory-wrap{width:min(88vw,390px)}}
+@media(min-width:900px) and (max-height:760px){#giftSection .memory-wrap{width:min(60svh,390px)}}
+
+/* ONLY the floral image in the quote section gets her photo. */
+.split.split--flip .art-frame{aspect-ratio:auto!important;background:#f8e8e1!important}
+.split.split--flip .art-frame>img.story-her-photo{
+  position:relative!important;z-index:1!important;display:block!important;
+  width:100%!important;height:auto!important;max-width:100%!important;
+  object-fit:contain!important;object-position:center!important;image-rendering:auto!important;
+}
+.split.split--flip .art-frame::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
+  box-shadow:inset 0 0 0 1px rgba(255,249,246,.25);
+}
 </style>
 <script>
 (function(){
-  function setMemoryImage(){
+  function replaceMemory(){
     const frame=document.querySelector('#memoryCard .memory-frame');
     if(!frame)return false;
-    const oldSvg=frame.querySelector('svg');
-    if(oldSvg)oldSvg.remove();
+    const oldSvg=frame.querySelector('svg'); if(oldSvg)oldSvg.remove();
     let img=frame.querySelector('img');
     if(!img){img=document.createElement('img');frame.appendChild(img)}
-    img.src='assets/her%20image.png?v=3';
-    img.alt='Her beautiful photo';
-    img.decoding='async';
-    img.loading='eager';
+    img.src='assets/file_000000004ab482088a7d776c072c4951.png?v=4';
+    img.alt='A cherished selfie of us together';img.decoding='async';img.loading='eager';
     return true;
   }
-  if(!setMemoryImage()){
-    const observer=new MutationObserver(()=>{if(setMemoryImage())observer.disconnect()});
+  function replaceQuotePhoto(){
+    const frame=document.querySelector('.split.split--flip .art-frame');
+    if(!frame)return false;
+    const oldSvg=frame.querySelector('svg'); if(oldSvg)oldSvg.remove();
+    let img=frame.querySelector('img.story-her-photo');
+    if(!img){img=document.createElement('img');img.className='story-her-photo';frame.appendChild(img)}
+    img.src='assets/her%20image.png?v=4';img.alt='Her photo';img.decoding='async';img.loading='eager';
+    return true;
+  }
+  function restoreLaterPhoto(){
+    const frame=document.querySelector('#viewStory>main#world>section.sec:nth-of-type(2) .art-frame');
+    if(!frame)return false;
+    const oldSvg=frame.querySelector('svg'); if(oldSvg)oldSvg.remove();
+    let img=frame.querySelector('img.story-photo');
+    if(!img){img=document.createElement('img');img.className='story-photo';frame.prepend(img)}
+    img.src='assets/scratch-photo.jpg';img.alt='A cherished photo of us together';
+    img.decoding='async';img.loading='eager';return true;
+  }
+  function apply(){return replaceMemory()||replaceQuotePhoto()||restoreLaterPhoto()}
+  if(!apply()){
+    const observer=new MutationObserver(()=>{if(apply())observer.disconnect()});
     observer.observe(document.documentElement,{childList:true,subtree:true});
     setTimeout(()=>observer.disconnect(),10000);
   }
 })();
 <\/script>`;
     h=h.replace(/<\/body>/i,patch+'</body>');
-    document.open();
-    document.write(h);
-    document.close();
-  }catch(e){
-    document.body.innerHTML='<main style="min-height:100vh;display:grid;place-items:center;font:16px system-ui;color:#4A2732;background:#FADED2">One moment 💗</main>';
-  }
+    document.open();document.write(h);document.close();
+  }catch(e){document.body.innerHTML='<main style="min-height:100vh;display:grid;place-items:center;font:16px system-ui;color:#4A2732;background:#FADED2">One moment 💗</main>'}
 })();
 </script>
 </body>
