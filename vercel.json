@@ -1,8 +1,11 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
-      "destination": "/api/myyellow-loader"
+      "src": "/",
+      "dest": "/api/myyellow-loader"
+    },
+    {
+      "handle": "filesystem"
     }
   ]
 }
