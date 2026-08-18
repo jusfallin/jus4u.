@@ -1,10 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
+  "redirects": [
     {
       "source": "/assets/bhavanika.jpg",
-      "destination": "/assets/IMG_20260818_203948.jpg"
-    },
+      "destination": "/assets/IMG_20260818_203948.jpg",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
     {
       "source": "/",
       "destination": "/loading.html"
