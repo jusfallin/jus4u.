@@ -65,6 +65,43 @@
   content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
   box-shadow:inset 0 0 0 1px rgba(255,249,246,.25);
 }
+
+/* FOUR SMALL POLAROIDS — ONLY in the dark “Beyond the jokes and the chaos” section. */
+#polaroidMemoryPair{
+  position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;
+}
+#polaroidMemoryPair .mini-polaroid{
+  position:absolute;width:clamp(108px,11vw,158px);padding:9px 9px 28px;
+  background:rgba(255,249,246,.98);border-radius:5px;
+  box-shadow:0 20px 42px rgba(0,0,0,.26),0 5px 14px rgba(0,0,0,.16);
+  transform-origin:center center;backface-visibility:hidden;
+}
+#polaroidMemoryPair .mini-polaroid img{
+  display:block;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center;
+  background:#ead9d3;border-radius:2px;image-rendering:auto;
+}
+#polaroidMemoryPair .mini-polaroid::after{
+  content:"";position:absolute;left:50%;bottom:8px;transform:translateX(-50%);
+  width:34%;height:3px;border-radius:999px;background:rgba(74,39,50,.12);
+}
+#polaroidMemoryPair .mini-left-1{left:clamp(18px,5.5vw,88px);top:27%;transform:rotate(-8deg)}
+#polaroidMemoryPair .mini-left-2{left:clamp(38px,8vw,132px);bottom:22%;transform:rotate(6deg)}
+#polaroidMemoryPair .mini-right-1{right:clamp(18px,5.5vw,88px);top:27%;transform:rotate(8deg)}
+#polaroidMemoryPair .mini-right-2{right:clamp(38px,8vw,132px);bottom:22%;transform:rotate(-6deg)}
+@media(max-width:900px){
+  #polaroidMemoryPair .mini-polaroid{width:clamp(82px,21vw,122px);padding:6px 6px 21px}
+  #polaroidMemoryPair .mini-left-1{left:10px;top:18%;transform:rotate(-7deg)}
+  #polaroidMemoryPair .mini-left-2{left:18px;bottom:15%;transform:rotate(5deg)}
+  #polaroidMemoryPair .mini-right-1{right:10px;top:18%;transform:rotate(7deg)}
+  #polaroidMemoryPair .mini-right-2{right:18px;bottom:15%;transform:rotate(-5deg)}
+}
+@media(max-width:620px){
+  #polaroidMemoryPair .mini-polaroid{width:clamp(70px,20vw,98px);padding:5px 5px 18px}
+  #polaroidMemoryPair .mini-left-1{left:5px;top:15%}
+  #polaroidMemoryPair .mini-left-2{left:8px;bottom:12%}
+  #polaroidMemoryPair .mini-right-1{right:5px;top:15%}
+  #polaroidMemoryPair .mini-right-2{right:8px;bottom:12%}
+}
 </style>
 <script>
 (function(){
@@ -113,6 +150,48 @@
     const observer=new MutationObserver(()=>{if(apply())observer.disconnect()});
     observer.observe(document.documentElement,{childList:true,subtree:true});
     setTimeout(()=>observer.disconnect(),10000);
+  }
+})();
+
+(function(){
+  const assets=[
+    'assets/03.jpg',
+    'assets/07.jpg',
+    'assets/08.jpg',
+    'assets/IMG_20260730_235824.png'
+  ];
+  function findTargetSection(){
+    const sections=[...document.querySelectorAll('section.sec')];
+    return sections.find(sec=>{
+      const text=(sec.textContent||'').replace(/\s+/g,' ').trim();
+      return text.includes('Beyond the jokes and the chaos') && text.includes('Never lose that spark');
+    })||null;
+  }
+  function addPolaroids(){
+    const section=findTargetSection();
+    if(!section)return false;
+    if(section.querySelector('#polaroidMemoryPair'))return true;
+    if(getComputedStyle(section).position==='static')section.style.position='relative';
+    const layer=document.createElement('div');
+    layer.id='polaroidMemoryPair';
+    assets.forEach((src,i)=>{
+      const card=document.createElement('figure');
+      card.className='mini-polaroid '+['mini-left-1','mini-left-2','mini-right-1','mini-right-2'][i];
+      const img=document.createElement('img');
+      img.src=src+'?v=1';
+      img.alt='A little memory';
+      img.decoding='async';
+      img.loading='lazy';
+      card.appendChild(img);
+      layer.appendChild(card);
+    });
+    section.appendChild(layer);
+    return true;
+  }
+  if(!addPolaroids()){
+    const observer=new MutationObserver(()=>{if(addPolaroids())observer.disconnect()});
+    observer.observe(document.documentElement,{childList:true,subtree:true});
+    setTimeout(()=>observer.disconnect(),12000);
   }
 })();
 <\/script>`;
