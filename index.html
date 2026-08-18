@@ -14,6 +14,29 @@
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;overflow-x:hidden;overflow-y:auto}
 body{font-family:Inter,system-ui,sans-serif;color:var(--wine);background:var(--bg);-webkit-font-smoothing:antialiased}
+#opening-loader{position:fixed;inset:0;z-index:999999;display:grid;place-items:center;background:linear-gradient(145deg,#fff7f5,#f8e9ef 50%,#eee5f7);transition:opacity .8s ease,visibility .8s ease}
+#opening-loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader-inner{text-align:center;width:min(88vw,390px);padding:24px}
+.loader-photo-wrap{position:relative;width:150px;height:150px;margin:0 auto 26px}
+.loader-ring{position:absolute;inset:-10px;border:1px solid rgba(150,80,95,.25);border-radius:50%;animation:spin 9s linear infinite}
+.loader-ring:before,.loader-ring:after{content:'✦';position:absolute;color:#d39a54;background:#fff7f5;border-radius:50%;padding:3px 6px;font-size:13px}
+.loader-ring:before{top:3px;left:14px}.loader-ring:after{right:9px;bottom:7px}
+.loader-photo{width:100%;height:100%;object-fit:cover;border-radius:50%;border:5px solid #fff9f6;box-shadow:0 18px 50px rgba(90,45,70,.22);animation:floatPhoto 3.2s ease-in-out infinite}
+.loader-think{position:absolute;right:-18px;top:-4px;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#fffaf7;border:1px solid rgba(150,80,95,.15);box-shadow:0 8px 20px rgba(90,45,70,.12);font-size:23px;animation:think 2s ease-in-out infinite}
+.loader-kicker{font:italic 18px Georgia,serif;color:#96505f;margin-bottom:7px}
+.loader-title{font:500 clamp(25px,7vw,34px)/1.15 Georgia,serif;color:#4a2732;margin:0}
+.loader-sub{font-size:13px;color:#8c6d76;margin:10px 0 24px}
+.loader-dots span{display:inline-block;animation:dot 1.2s infinite;opacity:.25}.loader-dots span:nth-child(2){animation-delay:.15s}.loader-dots span:nth-child(3){animation-delay:.3s}
+.loader-progress{height:7px;width:min(78vw,310px);margin:auto;border-radius:999px;background:rgba(255,255,255,.72);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(150,80,95,.1)}
+.loader-bar{height:100%;width:0;background:linear-gradient(90deg,#d78da2,#e5bf6c,#b987a8);border-radius:999px;transition:width .1s linear}
+.loader-percent{margin-top:11px;font-size:11px;letter-spacing:.16em;color:#9b7c84}
+.loader-note{margin-top:18px;font:italic 13px Georgia,serif;color:#a06978}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes floatPhoto{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes think{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-6px) rotate(5deg)}}
+@keyframes dot{0%,100%{opacity:.2;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){#opening-loader *{animation:none!important}}
+
 .page{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden;background:radial-gradient(80% 55% at 50% 18%,rgba(255,249,246,.9),transparent 68%),radial-gradient(65% 50% at 10% 82%,rgba(220,151,165,.18),transparent 70%),radial-gradient(70% 55% at 94% 72%,rgba(232,198,106,.12),transparent 72%),linear-gradient(145deg,#FCE7DC 0%,#FADED2 45%,#F8D8CC 100%)}
 .page:before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 50% 48%,rgba(255,249,246,.42),transparent 38%);animation:breath 5s ease-in-out infinite;pointer-events:none}
 .content{position:relative;z-index:2;width:min(92vw,760px);padding:28px 20px 34px;text-align:center}
@@ -30,12 +53,6 @@ body{font-family:Inter,system-ui,sans-serif;color:var(--wine);background:var(--b
 .enter:active{transform:scale(.97)}
 .enter:focus-visible{outline:2px solid var(--wine);outline-offset:5px}
 .heart{font-size:17px;line-height:1}
-
-/* ============================================================
-   OPENING TEXT REVEAL
-   A gentle cinematic sequence: each line arrives separately, with
-   soft blur + vertical movement instead of a sudden appearance.
-   ============================================================ */
 .content>*{opacity:0;filter:blur(9px);will-change:opacity,transform,filter}
 .eyebrow{transform:translate3d(0,-18px,0);animation:openingDown .95s cubic-bezier(.19,.78,.22,1) .12s forwards}
 .title{transform:translate3d(0,24px,0);animation:openingUp 1.15s cubic-bezier(.19,.78,.22,1) .34s forwards}
@@ -46,7 +63,6 @@ body{font-family:Inter,system-ui,sans-serif;color:var(--wine);background:var(--b
 .divider{transform:scaleX(0);filter:blur(2px);transform-origin:center;animation:lineReveal .85s cubic-bezier(.2,.8,.2,1) 1.67s forwards}
 .enter{transform:translate3d(0,24px,0) scale(.94);animation:buttonReveal 1s cubic-bezier(.17,.86,.22,1) 1.84s forwards,beckon 1.8s ease-in-out 2.9s infinite}
 .heart{display:inline-block;animation:heartPulse 1.4s ease-in-out 3.05s infinite}
-
 @keyframes openingDown{0%{opacity:0;filter:blur(9px);transform:translate3d(0,-18px,0);letter-spacing:.52em}100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0);letter-spacing:.34em}}
 @keyframes openingUp{0%{opacity:0;filter:blur(9px);transform:translate3d(0,24px,0)}100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0)}}
 @keyframes nameReveal{0%{opacity:0;filter:blur(12px);transform:translate3d(0,30px,0) scale(.94)}55%{opacity:1;filter:blur(0);transform:translate3d(0,-3px,0) scale(1.012)}100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0) scale(1)}}
@@ -54,9 +70,8 @@ body{font-family:Inter,system-ui,sans-serif;color:var(--wine);background:var(--b
 @keyframes lineReveal{0%{opacity:0;filter:blur(2px);transform:scaleX(0)}100%{opacity:1;filter:blur(0);transform:scaleX(1)}}
 @keyframes buttonReveal{0%{opacity:0;filter:blur(9px);transform:translate3d(0,24px,0) scale(.94)}70%{opacity:1;filter:blur(0);transform:translate3d(0,-2px,0) scale(1.025)}100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0) scale(1)}}
 @keyframes heartPulse{0%,100%{transform:scale(1) rotate(0)}35%{transform:scale(1.22) rotate(-4deg)}55%{transform:scale(1) rotate(3deg)}}
-
-.petal{position:absolute;z-index:1;pointer-events:none;width:clamp(9px,1.6vw,15px);height:clamp(14px,2.4vw,22px);border-radius:100% 0 100% 0;background:linear-gradient(145deg,#F4C5CD,#DC97A5);opacity:.55;filter:blur(.1px);animation:fall linear infinite}
-.p1{left:7%;top:-5%;animation-duration:10s;animation-delay:-2s;transform:rotate(25deg)}.p2{left:18%;top:-8%;animation-duration:13s;animation-delay:-8s}.p3{left:34%;top:-10%;animation-duration:11s;animation-delay:-4s}.p4{left:53%;top:-6%;animation-duration:14s;animation-delay:-11s}.p5{left:71%;top:-9%;animation-duration:12s;animation-delay:-6s}.p6{left:89%;top:-4%;animation-duration:15s;animation-delay:-10s}
+.petal{position:absolute;z-index:1;pointer-events:none;width:clamp(9px,1.6vw,15px);height:clamp(14px,2.4vw,22px);border-radius:100% 0 100% 0;background:linear-gradient(145deg,#F4C5CD,#DC97A5);opacity:.55;animation:fall linear infinite}
+.p1{left:7%;top:-5%;animation-duration:10s;animation-delay:-2s}.p2{left:18%;top:-8%;animation-duration:13s;animation-delay:-8s}.p3{left:34%;top:-10%;animation-duration:11s;animation-delay:-4s}.p4{left:53%;top:-6%;animation-duration:14s;animation-delay:-11s}.p5{left:71%;top:-9%;animation-duration:12s;animation-delay:-6s}.p6{left:89%;top:-4%;animation-duration:15s;animation-delay:-10s}
 .spark{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--gold);opacity:.4;animation:twinkle 2.8s ease-in-out infinite}.s1{left:17%;top:30%}.s2{right:13%;top:25%;animation-delay:.8s}.s3{left:11%;bottom:22%;animation-delay:1.4s}.s4{right:18%;bottom:18%;animation-delay:2s}
 @keyframes fall{0%{transform:translate3d(0,-10vh,0) rotate(0);opacity:0}12%{opacity:.6}50%{transform:translate3d(45px,52vh,0) rotate(170deg)}100%{transform:translate3d(-25px,115vh,0) rotate(350deg);opacity:0}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
@@ -69,6 +84,17 @@ body{font-family:Inter,system-ui,sans-serif;color:var(--wine);background:var(--b
 </style>
 </head>
 <body>
+<div id="opening-loader" aria-label="Loading your surprise">
+  <div class="loader-inner">
+    <div class="loader-photo-wrap"><div class="loader-ring"></div><img class="loader-photo" src="/assets/bhavanika.jpg" alt=""><div class="loader-think">🤔</div></div>
+    <div class="loader-kicker">Ennava irukum...</div>
+    <h2 class="loader-title">Konjam iru, my yellow 🤔</h2>
+    <div class="loader-sub"><span class="loader-dots"><span>•</span><span>•</span><span>•</span></span></div>
+    <div class="loader-progress"><div class="loader-bar"></div></div>
+    <div class="loader-percent">0%</div>
+    <div class="loader-note">something lovely is getting ready for you 💛</div>
+  </div>
+</div>
 <main class="page">
   <span class="petal p1"></span><span class="petal p2"></span><span class="petal p3"></span><span class="petal p4"></span><span class="petal p5"></span><span class="petal p6"></span>
   <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span>
@@ -83,5 +109,21 @@ body{font-family:Inter,system-ui,sans-serif;color:var(--wine);background:var(--b
     <a class="enter" href="main.html" aria-label="Enter the birthday celebration">Let's begin <span class="heart">💗</span></a>
   </section>
 </main>
+<script>
+(function(){
+  var loader=document.getElementById('opening-loader');
+  var bar=loader.querySelector('.loader-bar');
+  var pct=loader.querySelector('.loader-percent');
+  var start=performance.now(), duration=4200;
+  function tick(now){
+    var p=Math.min(1,(now-start)/duration);
+    var eased=1-Math.pow(1-p,3);
+    var value=Math.floor(eased*100);
+    bar.style.width=value+'%'; pct.textContent=value+'%';
+    if(p<1){requestAnimationFrame(tick)}else{setTimeout(function(){loader.classList.add('hide');setTimeout(function(){loader.remove()},900)},350)}
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
 </body>
 </html>
