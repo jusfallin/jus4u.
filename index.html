@@ -30,6 +30,31 @@ body{font-family:Inter,system-ui,sans-serif;color:var(--wine);background:var(--b
 .enter:active{transform:scale(.97)}
 .enter:focus-visible{outline:2px solid var(--wine);outline-offset:5px}
 .heart{font-size:17px;line-height:1}
+
+/* ============================================================
+   OPENING TEXT REVEAL
+   A gentle cinematic sequence: each line arrives separately, with
+   soft blur + vertical movement instead of a sudden appearance.
+   ============================================================ */
+.content>*{opacity:0;filter:blur(9px);will-change:opacity,transform,filter}
+.eyebrow{transform:translate3d(0,-18px,0);animation:openingDown .95s cubic-bezier(.19,.78,.22,1) .12s forwards}
+.title{transform:translate3d(0,24px,0);animation:openingUp 1.15s cubic-bezier(.19,.78,.22,1) .34s forwards}
+.name{transform:translate3d(0,28px,0) scale(.96);animation:nameReveal 1.45s cubic-bezier(.16,.82,.18,1) .62s forwards}
+.badge{transform:translate3d(0,18px,0) scale(.72);animation:badgeReveal 1s cubic-bezier(.17,.86,.22,1) 1.02s forwards,float 3s ease-in-out 2.15s infinite}
+.message{transform:translate3d(0,20px,0);animation:openingUp 1s cubic-bezier(.19,.78,.22,1) 1.25s forwards}
+.signature{transform:translate3d(0,16px,0);animation:openingUp .9s cubic-bezier(.19,.78,.22,1) 1.48s forwards}
+.divider{transform:scaleX(0);filter:blur(2px);transform-origin:center;animation:lineReveal .85s cubic-bezier(.2,.8,.2,1) 1.67s forwards}
+.enter{transform:translate3d(0,24px,0) scale(.94);animation:buttonReveal 1s cubic-bezier(.17,.86,.22,1) 1.84s forwards,beckon 1.8s ease-in-out 2.9s infinite}
+.heart{display:inline-block;animation:heartPulse 1.4s ease-in-out 3.05s infinite}
+
+@keyframes openingDown{0%{opacity:0;filter:blur(9px);transform:translate3d(0,-18px,0);letter-spacing:.52em}100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0);letter-spacing:.34em}}
+@keyframes openingUp{0%{opacity:0;filter:blur(9px);transform:translate3d(0,24px,0)}100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0)}}
+@keyframes nameReveal{0%{opacity:0;filter:blur(12px);transform:translate3d(0,30px,0) scale(.94)}55%{opacity:1;filter:blur(0);transform:translate3d(0,-3px,0) scale(1.012)}100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0) scale(1)}}
+@keyframes badgeReveal{0%{opacity:0;filter:blur(10px);transform:translate3d(0,18px,0) scale(.72)}70%{opacity:1;filter:blur(0);transform:translate3d(0,-2px,0) scale(1.06)}100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0) scale(1)}}
+@keyframes lineReveal{0%{opacity:0;filter:blur(2px);transform:scaleX(0)}100%{opacity:1;filter:blur(0);transform:scaleX(1)}}
+@keyframes buttonReveal{0%{opacity:0;filter:blur(9px);transform:translate3d(0,24px,0) scale(.94)}70%{opacity:1;filter:blur(0);transform:translate3d(0,-2px,0) scale(1.025)}100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0) scale(1)}}
+@keyframes heartPulse{0%,100%{transform:scale(1) rotate(0)}35%{transform:scale(1.22) rotate(-4deg)}55%{transform:scale(1) rotate(3deg)}}
+
 .petal{position:absolute;z-index:1;pointer-events:none;width:clamp(9px,1.6vw,15px);height:clamp(14px,2.4vw,22px);border-radius:100% 0 100% 0;background:linear-gradient(145deg,#F4C5CD,#DC97A5);opacity:.55;filter:blur(.1px);animation:fall linear infinite}
 .p1{left:7%;top:-5%;animation-duration:10s;animation-delay:-2s;transform:rotate(25deg)}.p2{left:18%;top:-8%;animation-duration:13s;animation-delay:-8s}.p3{left:34%;top:-10%;animation-duration:11s;animation-delay:-4s}.p4{left:53%;top:-6%;animation-duration:14s;animation-delay:-11s}.p5{left:71%;top:-9%;animation-duration:12s;animation-delay:-6s}.p6{left:89%;top:-4%;animation-duration:15s;animation-delay:-10s}
 .spark{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--gold);opacity:.4;animation:twinkle 2.8s ease-in-out infinite}.s1{left:17%;top:30%}.s2{right:13%;top:25%;animation-delay:.8s}.s3{left:11%;bottom:22%;animation-delay:1.4s}.s4{right:18%;bottom:18%;animation-delay:2s}
@@ -40,7 +65,7 @@ body{font-family:Inter,system-ui,sans-serif;color:var(--wine);background:var(--b
 @keyframes twinkle{0%,100%{transform:scale(.6);opacity:.2}50%{transform:scale(1.35);opacity:.75}}
 @media(max-width:520px){.content{padding:24px 18px 30px}.name{margin-top:5px;margin-bottom:20px}.message{max-width:34ch}.signature{margin:17px 0 21px}.enter{min-height:56px;padding:17px 30px;letter-spacing:.22em}}
 @media(max-height:760px) and (min-width:521px){.content{padding-block:18px}.eyebrow{margin-bottom:12px}.name{margin-bottom:14px}.badge{margin-bottom:14px}.message{line-height:1.5}.signature{margin:12px 0 16px}.divider{margin-bottom:15px}.enter{min-height:50px;padding:14px 32px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){.content>*{opacity:1!important;filter:none!important;transform:none!important;animation:none!important}.badge,.enter,.heart{animation:none!important}*,*:before,*:after{transition:none!important}}
 </style>
 </head>
 <body>
