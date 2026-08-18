@@ -7,10 +7,13 @@
       "permanent": false
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
-      "destination": "/loading.html"
+      "src": "^/$",
+      "dest": "/loading.html"
+    },
+    {
+      "handle": "filesystem"
     }
   ]
 }
