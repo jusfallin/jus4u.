@@ -29,7 +29,7 @@
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; const duration=reduce?900:4200; const start=performance.now();
  function tick(now){const p=Math.min(1,(now-start)/duration),e=1-Math.pow(1-p,3),v=Math.floor(e*100);bar.style.width=v+'%';pct.textContent=v+'%';if(p<1)requestAnimationFrame(tick);else finish()}
  async function finish(){bar.style.width='100%';pct.textContent='100%';await new Promise(r=>setTimeout(r,reduce?120:520));
-   try{const res=await fetch('/index.html?loader_bypass='+Date.now(),{cache:'no-store'});const html=await res.text();loader.style.opacity='0';await new Promise(r=>setTimeout(r,650));document.open();document.write(html);document.close();}
+   try{const res=await fetch('/index.html?loader_bypass='+Date.now(),{cache:'no-store'});const html=await res.text();const doc=new DOMParser().parseFromString(html,'text/html');doc.getElementById('opening-loader')?.remove();loader.style.opacity='0';await new Promise(r=>setTimeout(r,650));document.open();document.write('<!doctype html>'+doc.documentElement.outerHTML);document.close();}
    catch(e){location.href='/index.html'}
  }
  requestAnimationFrame(tick);
