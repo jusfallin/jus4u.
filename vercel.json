@@ -1,11 +1,9 @@
 {
-  "routes": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
     {
-      "src": "/",
-      "dest": "/api/myyellow-loader"
-    },
-    {
-      "handle": "filesystem"
+      "source": "/",
+      "destination": "/loading.html"
     }
   ]
 }
