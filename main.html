@@ -66,41 +66,41 @@
   box-shadow:inset 0 0 0 1px rgba(255,249,246,.25);
 }
 
-/* FOUR SMALL POLAROIDS — ONLY in the dark “Beyond the jokes and the chaos” section. */
-#polaroidMemoryPair{
-  position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;
+/* POLAROIDS — four small memory photos ONLY in the dark “Beyond the jokes and the chaos” section. */
+.beyond-polaroids{
+  position:absolute!important;inset:0!important;z-index:8!important;
+  pointer-events:none!important;display:block!important;overflow:visible!important;
 }
-#polaroidMemoryPair .mini-polaroid{
-  position:absolute;width:clamp(108px,11vw,158px);padding:9px 9px 28px;
-  background:rgba(255,249,246,.98);border-radius:5px;
-  box-shadow:0 20px 42px rgba(0,0,0,.26),0 5px 14px rgba(0,0,0,.16);
-  transform-origin:center center;backface-visibility:hidden;
+.beyond-polaroid{
+  position:absolute!important;width:clamp(112px,10.5vw,154px)!important;
+  aspect-ratio:4/5!important;padding:7px 7px 30px!important;
+  background:#fffaf7!important;border-radius:5px!important;
+  box-shadow:0 18px 34px rgba(25,8,14,.30),0 3px 8px rgba(25,8,14,.20)!important;
+  transform-origin:center!important;
+  overflow:hidden!important;
+  opacity:1!important;visibility:visible!important;
 }
-#polaroidMemoryPair .mini-polaroid img{
-  display:block;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center;
-  background:#ead9d3;border-radius:2px;image-rendering:auto;
+.beyond-polaroid img{
+  display:block!important;width:100%!important;height:100%!important;
+  max-width:none!important;object-fit:cover!important;object-position:center!important;
+  border-radius:2px!important;background:#ead9d3!important;
 }
-#polaroidMemoryPair .mini-polaroid::after{
-  content:"";position:absolute;left:50%;bottom:8px;transform:translateX(-50%);
-  width:34%;height:3px;border-radius:999px;background:rgba(74,39,50,.12);
+.beyond-polaroid::after{
+  content:"♡";position:absolute;left:0;right:0;bottom:3px;
+  text-align:center;font:18px/1 "Great Vibes","Segoe Script",cursive;
+  color:#b86f7e!important;
 }
-#polaroidMemoryPair .mini-left-1{left:clamp(18px,5.5vw,88px);top:27%;transform:rotate(-8deg)}
-#polaroidMemoryPair .mini-left-2{left:clamp(38px,8vw,132px);bottom:22%;transform:rotate(6deg)}
-#polaroidMemoryPair .mini-right-1{right:clamp(18px,5.5vw,88px);top:27%;transform:rotate(8deg)}
-#polaroidMemoryPair .mini-right-2{right:clamp(38px,8vw,132px);bottom:22%;transform:rotate(-6deg)}
-@media(max-width:900px){
-  #polaroidMemoryPair .mini-polaroid{width:clamp(82px,21vw,122px);padding:6px 6px 21px}
-  #polaroidMemoryPair .mini-left-1{left:10px;top:18%;transform:rotate(-7deg)}
-  #polaroidMemoryPair .mini-left-2{left:18px;bottom:15%;transform:rotate(5deg)}
-  #polaroidMemoryPair .mini-right-1{right:10px;top:18%;transform:rotate(7deg)}
-  #polaroidMemoryPair .mini-right-2{right:18px;bottom:15%;transform:rotate(-5deg)}
-}
-@media(max-width:620px){
-  #polaroidMemoryPair .mini-polaroid{width:clamp(70px,20vw,98px);padding:5px 5px 18px}
-  #polaroidMemoryPair .mini-left-1{left:5px;top:15%}
-  #polaroidMemoryPair .mini-left-2{left:8px;bottom:12%}
-  #polaroidMemoryPair .mini-right-1{right:5px;top:15%}
-  #polaroidMemoryPair .mini-right-2{right:8px;bottom:12%}
+.beyond-polaroid.p1{left:clamp(8px,2.5vw,34px)!important;top:25%!important;transform:rotate(-7deg)!important}
+.beyond-polaroid.p2{left:clamp(16px,3vw,46px)!important;top:56%!important;transform:rotate(5deg)!important}
+.beyond-polaroid.p3{right:clamp(8px,2.5vw,34px)!important;top:27%!important;transform:rotate(6deg)!important}
+.beyond-polaroid.p4{right:clamp(16px,3vw,46px)!important;top:58%!important;transform:rotate(-5deg)!important}
+@media(max-width:760px){
+  .beyond-polaroid{width:clamp(72px,22vw,100px)!important;padding:4px 4px 22px!important}
+  .beyond-polaroid::after{font-size:14px;bottom:2px}
+  .beyond-polaroid.p1{left:3px!important;top:29%!important}
+  .beyond-polaroid.p2{left:3px!important;top:61%!important}
+  .beyond-polaroid.p3{right:3px!important;top:29%!important}
+  .beyond-polaroid.p4{right:3px!important;top:61%!important}
 }
 </style>
 <script>
@@ -140,58 +140,55 @@
     return true;
   }
 
+  /* Add the four requested photos around the dark message section. */
+  function addBeyondPolaroids(){
+    const nodes=[...document.querySelectorAll('h1,h2,h3,h4,p,div')];
+    const heading=nodes.find(el=>el.children.length===0 && el.textContent.trim()==='Beyond the jokes and the chaos,');
+    if(!heading)return false;
+    let section=heading.closest('section');
+    if(!section){
+      section=heading.parentElement;
+      for(let i=0;i<6 && section && section.parentElement;i++){
+        const r=section.getBoundingClientRect();
+        if(r.height>350){break}
+        section=section.parentElement;
+      }
+    }
+    if(!section)return false;
+    section.style.position='relative';
+    section.style.overflow='visible';
+    if(section.querySelector('.beyond-polaroids'))return true;
+    const wrap=document.createElement('div');
+    wrap.className='beyond-polaroids';
+    const photos=[
+      ['03.jpg','p1','A little memory ♡'],
+      ['07.jpg','p2','Always us ♡'],
+      ['08.jpg','p3','One of my favorites ♡'],
+      ['IMG_20260730_235824.png','p4','A moment to keep ♡']
+    ];
+    photos.forEach(([src,cls,alt])=>{
+      const card=document.createElement('figure');
+      card.className='beyond-polaroid '+cls;
+      const img=document.createElement('img');
+      img.src='assets/'+encodeURIComponent(src)+'?v=1';
+      img.alt=alt;img.loading='eager';img.decoding='async';
+      card.appendChild(img);wrap.appendChild(card);
+    });
+    section.appendChild(wrap);
+    return true;
+  }
+
   function apply(){
     const a=replaceMemory();
     const b=replaceFirstQuotePhoto();
     const c=replaceSecondQuotePhoto();
-    return a||b||c;
+    const d=addBeyondPolaroids();
+    return a||b||c||d;
   }
   if(!apply()){
-    const observer=new MutationObserver(()=>{if(apply())observer.disconnect()});
+    const observer=new MutationObserver(()=>{if(apply()&&document.querySelector('.beyond-polaroids'))observer.disconnect()});
     observer.observe(document.documentElement,{childList:true,subtree:true});
     setTimeout(()=>observer.disconnect(),10000);
-  }
-})();
-
-(function(){
-  const assets=[
-    'assets/03.jpg',
-    'assets/07.jpg',
-    'assets/08.jpg',
-    'assets/IMG_20260730_235824.png'
-  ];
-  function findTargetSection(){
-    const sections=[...document.querySelectorAll('section.sec')];
-    return sections.find(sec=>{
-      const text=(sec.textContent||'').replace(/\s+/g,' ').trim();
-      return text.includes('Beyond the jokes and the chaos') && text.includes('Never lose that spark');
-    })||null;
-  }
-  function addPolaroids(){
-    const section=findTargetSection();
-    if(!section)return false;
-    if(section.querySelector('#polaroidMemoryPair'))return true;
-    if(getComputedStyle(section).position==='static')section.style.position='relative';
-    const layer=document.createElement('div');
-    layer.id='polaroidMemoryPair';
-    assets.forEach((src,i)=>{
-      const card=document.createElement('figure');
-      card.className='mini-polaroid '+['mini-left-1','mini-left-2','mini-right-1','mini-right-2'][i];
-      const img=document.createElement('img');
-      img.src=src+'?v=1';
-      img.alt='A little memory';
-      img.decoding='async';
-      img.loading='lazy';
-      card.appendChild(img);
-      layer.appendChild(card);
-    });
-    section.appendChild(layer);
-    return true;
-  }
-  if(!addPolaroids()){
-    const observer=new MutationObserver(()=>{if(addPolaroids())observer.disconnect()});
-    observer.observe(document.documentElement,{childList:true,subtree:true});
-    setTimeout(()=>observer.disconnect(),12000);
   }
 })();
 <\/script>`;
