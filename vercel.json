@@ -3,7 +3,7 @@
   "redirects": [
     {
       "source": "/assets/bhavanika.jpg",
-      "destination": "/assets/IMG_20260818_203948.jpg",
+      "destination": "/assets/IMG_20260818_203948.jpg?loader=v2",
       "permanent": false
     }
   ],
