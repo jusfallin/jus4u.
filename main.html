@@ -116,7 +116,6 @@
     return true;
   }
 
-  /* PHOTO #1: scratch-photo.jpg in the LEFT card of the first quote section. */
   function replaceFirstQuotePhoto(){
     const frame=document.querySelector('.split:not(.split--flip) .art-frame');
     if(!frame)return false;
@@ -128,7 +127,6 @@
     return true;
   }
 
-  /* PHOTO #2: her image.png in the RIGHT card of the second quote section. */
   function replaceSecondQuotePhoto(){
     const frame=document.querySelector('.split.split--flip .art-frame');
     if(!frame)return false;
@@ -140,7 +138,6 @@
     return true;
   }
 
-  /* Add the four requested photos around the dark message section. */
   function addBeyondPolaroids(){
     const nodes=[...document.querySelectorAll('h1,h2,h3,h4,p,div')];
     const heading=nodes.find(el=>el.children.length===0 && el.textContent.trim()==='Beyond the jokes and the chaos,');
@@ -150,7 +147,7 @@
       section=heading.parentElement;
       for(let i=0;i<6 && section && section.parentElement;i++){
         const r=section.getBoundingClientRect();
-        if(r.height>350){break}
+        if(r.height>350)break;
         section=section.parentElement;
       }
     }
@@ -178,11 +175,33 @@
     return true;
   }
 
+  function addGiftAutoScroll(){
+    const gift=document.getElementById('gift');
+    const memory=document.getElementById('memory');
+    if(!gift||!memory||gift.dataset.autoScrollBound)return;
+    gift.dataset.autoScrollBound='true';
+    let started=false;
+    gift.addEventListener('click',function(){
+      if(started)return;
+      started=true;
+      const scrollToMemory=()=>{
+        setTimeout(()=>memory.scrollIntoView({behavior:'smooth',block:'center'}),420);
+      };
+      const observer=new MutationObserver(()=>{
+        const visible=getComputedStyle(memory).display!=='none' && parseFloat(getComputedStyle(memory).opacity||'0')>.85;
+        if(visible){observer.disconnect();scrollToMemory();}
+      });
+      observer.observe(memory,{attributes:true,attributeFilter:['style']});
+      setTimeout(()=>{observer.disconnect();if(getComputedStyle(memory).display!=='none')scrollToMemory()},7500);
+    },{passive:true});
+  }
+
   function apply(){
     const a=replaceMemory();
     const b=replaceFirstQuotePhoto();
     const c=replaceSecondQuotePhoto();
     const d=addBeyondPolaroids();
+    addGiftAutoScroll();
     return a||b||c||d;
   }
   if(!apply()){
