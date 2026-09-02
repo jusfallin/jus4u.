@@ -1,1 +1,0 @@
-Trigger the precise Kavithai image-card patch workflow.
