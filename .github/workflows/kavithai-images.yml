@@ -1,0 +1,78 @@
+name: Apply Kavithai photo cards
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace Kavithai art with the five uploaded photos
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          p = Path('website file.html')
+          s = p.read_text(encoding='utf-8')
+
+          if 'KAVITHAI_IMAGES' not in s:
+              marker = 'function lart(i){'
+              pos = s.find(marker)
+              if pos == -1:
+                  raise SystemExit('Could not find lart(i) in website file.html')
+
+              start = pos
+              brace = s.find('{', start)
+              depth = 0
+              end = None
+              for j in range(brace, len(s)):
+                  if s[j] == '{': depth += 1
+                  elif s[j] == '}':
+                      depth -= 1
+                      if depth == 0:
+                          end = j + 1
+                          break
+              if end is None:
+                  raise SystemExit('Could not parse lart(i)')
+
+              new_fn = '''var KAVITHAI_IMAGES=["01.jpg","02.jpg","03.jpg","13.jpg","IMG_20260730_235824.png"];
+          function lart(i){
+            var src=KAVITHAI_IMAGES[i]||KAVITHAI_IMAGES[0];
+            return '<img class="kavithai-photo" src="assets/'+encodeURIComponent(src)+'" alt="Kavithai '+String(i+1).padStart(2,'0')+' — cherished memory" loading="eager" decoding="async">';
+          }'''
+              s = s[:start] + new_fn + s[end:]
+
+              css = '''
+          <style id="kavithai-photo-cards">
+          .poem .art-card{border-width:clamp(10px,1.2vw,17px);border-radius:15px;background:linear-gradient(145deg,#fffdfb,#fff7f2);box-shadow:0 34px 68px -34px rgba(74,39,50,.48),0 8px 20px -12px rgba(74,39,50,.22);transition:box-shadow .5s ease,transform .5s cubic-bezier(.2,.8,.24,1)}
+          .poem .art-frame{aspect-ratio:4/5;border-radius:7px;background:#f2ddd6;isolation:isolate}
+          .poem .art-frame::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(255,249,246,.08),rgba(74,39,50,0) 58%,rgba(74,39,50,.10)),linear-gradient(135deg,rgba(255,249,246,.16),transparent 42%)}
+          .kavithai-photo{position:relative!important;z-index:1!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important;object-position:center!important;filter:saturate(.98) contrast(1.01);transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .6s ease;will-change:transform}
+          .poem .tilt:hover .kavithai-photo{transform:scale(1.035);filter:saturate(1.04) contrast(1.02)}
+          .poem .art-cap{padding:15px 10px 6px;font-size:clamp(20px,2vw,30px);text-shadow:0 1px 0 rgba(255,255,255,.7)}
+          .poem .art-card::before{content:"♡";position:absolute;right:-12px;top:-14px;z-index:5;width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#f0b6c0,#dc97a5);color:#fff9f6;font:22px/1 var(--script);border:4px solid var(--cream);box-shadow:0 12px 24px -12px rgba(74,39,50,.45);transform:translateZ(44px);transition:transform .5s ease}
+          .poem .tilt:hover .art-card::before{transform:translateZ(44px) rotate(10deg) scale(1.08)}
+          @media(max-width:719px){.poem .art-card::before{right:-8px;top:-10px;width:38px;height:38px;font-size:20px}.poem .art-cap{padding-top:12px}}
+          </style>
+          '''
+              close = s.lower().rfind('</head>')
+              if close == -1:
+                  raise SystemExit('Could not find </head>')
+              s = s[:close] + css + s[close:]
+              p.write_text(s, encoding='utf-8')
+
+      - name: Commit the photo-card change and remove this one-time workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "website file.html"
+          git rm -f .github/workflows/kavithai-images.yml
+          git commit -m "Use personal photos for Kavithai cards" || exit 0
+          git push
