@@ -541,6 +541,18 @@ body.cur-on,body.cur-on a,body.cur-on button{cursor:none}
   .view.leaving{transition-duration:.2s}
 }
 </style>
+
+<style id="kavithai-photo-cards">
+.poem .art-card{border-width:clamp(10px,1.2vw,17px);border-radius:15px;background:linear-gradient(145deg,#fffdfb,#fff7f2);box-shadow:0 34px 68px -34px rgba(74,39,50,.48),0 8px 20px -12px rgba(74,39,50,.22);transition:box-shadow .5s ease,transform .5s cubic-bezier(.2,.8,.24,1)}
+.poem .art-frame{aspect-ratio:4/5;border-radius:7px;background:#f2ddd6;isolation:isolate}
+.poem .art-frame::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(255,249,246,.08),rgba(74,39,50,0) 58%,rgba(74,39,50,.10)),linear-gradient(135deg,rgba(255,249,246,.16),transparent 42%)}
+.kavithai-photo{position:relative!important;z-index:1!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important;object-position:center!important;filter:saturate(.98) contrast(1.01);transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .6s ease;will-change:transform}
+.poem .tilt:hover .kavithai-photo{transform:scale(1.035);filter:saturate(1.04) contrast(1.02)}
+.poem .art-cap{padding:15px 10px 6px;font-size:clamp(20px,2vw,30px);text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.poem .art-card::before{content:"♡";position:absolute;right:-12px;top:-14px;z-index:5;width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#f0b6c0,#dc97a5);color:#fff9f6;font:22px/1 var(--script);border:4px solid var(--cream);box-shadow:0 12px 24px -12px rgba(74,39,50,.45);transform:translateZ(44px);transition:transform .5s ease}
+.poem .tilt:hover .art-card::before{transform:translateZ(44px) rotate(10deg) scale(1.08)}
+@media(max-width:719px){.poem .art-card::before{right:-8px;top:-10px;width:38px;height:38px;font-size:20px}.poem .art-cap{padding-top:12px}}
+</style>
 </head>
 <body>
 
@@ -2046,32 +2058,10 @@ btnCelebrate.addEventListener("click",function(){
 var viewStory=$("#viewStory"),viewLetters=$("#viewLetters");
 var lettersBuilt=false;
 
+var KAVITHAI_IMAGES=["01.jpg","02.jpg","03.jpg","13.jpg","IMG_20260730_235824.png"];
 function lart(i){
-  return '<svg viewBox="0 0 400 400" data-par="0.06" role="img" aria-label="A soft floral illustration">'+
-   '<rect width="400" height="400" fill="url(#paperG)"/>'+
-   '<circle cx="'+(120+i*46)+'" cy="'+(110+i*24)+'" r="'+(120-i*8)+'" fill="#DC97A5" opacity=".11"/>'+
-   '<circle cx="'+(300-i*30)+'" cy="'+(300-i*18)+'" r="'+(96+i*6)+'" fill="#E8C66A" opacity=".10"/>'+
-   '<g stroke="url(#leafG)" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".76">'+
-     '<path d="M200 396c-4-84 10-140 44-186"/><path d="M200 396c0-70-18-116-52-152"/>'+
-     '<path d="M200 396c22-46 52-72 92-86"/></g>'+
-   '<g fill="url(#leafG)" opacity=".56">'+
-     '<ellipse cx="244" cy="272" rx="29" ry="11" transform="rotate(-30 244 272)"/>'+
-     '<ellipse cx="158" cy="292" rx="27" ry="10" transform="rotate(28 158 292)"/>'+
-     '<ellipse cx="278" cy="330" rx="23" ry="9" transform="rotate(-14 278 330)"/></g>'+
-   '<g transform="translate('+(248-i*10)+','+(168+i*8)+')"><g fill="url(#petalB)">'+
-     '<ellipse rx="21" ry="36"/><ellipse rx="21" ry="36" transform="rotate(45)"/>'+
-     '<ellipse rx="21" ry="36" transform="rotate(90)"/><ellipse rx="21" ry="36" transform="rotate(135)"/></g>'+
-     '<circle r="11" fill="#E8C66A"/><circle r="5" fill="#B86F7E" opacity=".5"/></g>'+
-   '<g transform="translate('+(140+i*8)+','+(206-i*6)+') scale(.76)"><g fill="url(#petalA)">'+
-     '<ellipse rx="21" ry="36" transform="rotate(24)"/><ellipse rx="21" ry="36" transform="rotate(69)"/>'+
-     '<ellipse rx="21" ry="36" transform="rotate(114)"/><ellipse rx="21" ry="36" transform="rotate(159)"/></g>'+
-     '<circle r="11" fill="#E8C66A"/></g>'+
-   '<g transform="translate(200,120) scale(.46)"><g fill="url(#petalB)">'+
-     '<ellipse rx="21" ry="36" transform="rotate(12)"/><ellipse rx="21" ry="36" transform="rotate(57)"/>'+
-     '<ellipse rx="21" ry="36" transform="rotate(102)"/><ellipse rx="21" ry="36" transform="rotate(147)"/></g>'+
-     '<circle r="11" fill="#E8C66A"/></g>'+
-   '<g fill="#DC97A5" opacity=".46"><circle cx="58" cy="88" r="3"/><circle cx="346" cy="72" r="2.6"/>'+
-     '<circle cx="352" cy="348" r="3.2"/><circle cx="54" cy="342" r="2.4"/></g></svg>';
+  var src=KAVITHAI_IMAGES[i]||KAVITHAI_IMAGES[0];
+  return '<img class="kavithai-photo" src="assets/'+encodeURIComponent(src)+'" alt="Kavithai '+String(i+1).padStart(2,'0')+' — cherished memory" loading="eager" decoding="async">';
 }
 function bodyHTML(lines){
   return lines.map(function(ln){
