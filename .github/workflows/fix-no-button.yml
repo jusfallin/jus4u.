@@ -43,3 +43,4 @@ jobs:
           git rm -f .github/workflows/fix-no-button.yml || true
           git commit -m "Remove temporary fix workflow" || true
           git push
+# trigger the main-branch workflow run
